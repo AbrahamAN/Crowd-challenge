@@ -10,7 +10,7 @@ const ProductId = () => {
   const fetchUniqueProduct = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/products/${router.query.id}`
+        `${process.env.VERCEL_URL}/products/${router.query.id}`
       );
       const data = await response.json();
 
@@ -18,9 +18,7 @@ const ProductId = () => {
     } catch (error) {
       console.log("error UPS");
     }
-  }, [router.query.id, uniqueItem]);
-
-  console.log(uniqueItem);
+  }, [router.query.id]);
 
   useEffect(() => {
     fetchUniqueProduct();

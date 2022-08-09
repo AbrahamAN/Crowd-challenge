@@ -1,6 +1,22 @@
 import prisma from "../../../prisma";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(request, response) {
+type Product = {
+  id: number;
+  name: string;
+  image_url: string;
+  price: number;
+  description: string;
+};
+
+type ResponseError = {
+  message: string;
+};
+
+export default async function handler(
+  request: NextApiRequest,
+  response: NextApiResponse<Product[] | ResponseError>
+) {
   // POST, DELETE, PATCH, PUT, GET
 
   if (request.method === "POST") {

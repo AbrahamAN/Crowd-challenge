@@ -15,7 +15,7 @@ const Products = () => {
 
   const fetchProducts = useCallback(async () => {
     try {
-      const response = await fetch(`${process.env.API_URL}/products/`);
+      const response = await fetch("api/products/");
       const data = await response.json();
       setItems(data);
     } catch (error) {
@@ -29,22 +29,19 @@ const Products = () => {
     try {
       if (productToEdit) {
         // Le decimos al backend con un PUT que edite el producto
-        promise = await fetch(
-          `${process.env.API_URL}/products/` + productToEdit.id,
-          {
-            method: "PUT",
-            body: JSON.stringify({
-              ...product,
-              price: Number(product.price),
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        promise = await fetch("api/products/" + productToEdit.id, {
+          method: "PUT",
+          body: JSON.stringify({
+            ...product,
+            price: Number(product.price),
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
       } else {
         // Le decimos al backend con un POST que cree el producto
-        promise = await fetch(`${process.env.API_URL}/products/`, {
+        promise = await fetch("api/products/", {
           method: "POST",
           body: JSON.stringify({
             ...product,
@@ -77,7 +74,7 @@ const Products = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`${process.env.API_URL}/products/${id}`, {
+      const response = await fetch("api/products/${id}", {
         method: "DELETE",
       });
 
@@ -96,8 +93,6 @@ const Products = () => {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-
-  console.log(process.env.API_URL);
 
   return (
     <div>

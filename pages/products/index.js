@@ -97,6 +97,8 @@ const Products = () => {
     fetchProducts();
   }, [fetchProducts]);
 
+  console.log(process.env.API_URL);
+
   return (
     <div>
       <Header />

@@ -15,7 +15,7 @@ const Products = () => {
 
   const fetchProducts = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/products/");
+      const response = await fetch(`${process.env.API_URL}/products/`);
       const data = await response.json();
       setItems(data);
     } catch (error) {
@@ -30,7 +30,7 @@ const Products = () => {
       if (productToEdit) {
         // Le decimos al backend con un PUT que edite el producto
         promise = await fetch(
-          "http://localhost:3000/api/products/" + productToEdit.id,
+          `${process.env.API_URL}/products/` + productToEdit.id,
           {
             method: "PUT",
             body: JSON.stringify({
@@ -44,7 +44,7 @@ const Products = () => {
         );
       } else {
         // Le decimos al backend con un POST que cree el producto
-        promise = await fetch("http://localhost:3000/api/products/", {
+        promise = await fetch(`${process.env.API_URL}/products/`, {
           method: "POST",
           body: JSON.stringify({
             ...product,
@@ -77,7 +77,7 @@ const Products = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/products/${id}`, {
+      const response = await fetch(`${process.env.API_URL}/products/${id}`, {
         method: "DELETE",
       });
 

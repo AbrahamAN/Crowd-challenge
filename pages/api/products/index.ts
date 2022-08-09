@@ -6,7 +6,7 @@ type Product = {
   name: string;
   image_url: string;
   price: number;
-  description: string;
+  description?: string | null;
 };
 
 type ResponseError = {
@@ -15,10 +15,8 @@ type ResponseError = {
 
 export default async function handler(
   request: NextApiRequest,
-  response: NextApiResponse<Product[] | ResponseError>
+  response: NextApiResponse<Product[] | Product | ResponseError>
 ) {
-  // POST, DELETE, PATCH, PUT, GET
-
   if (request.method === "POST") {
     const createdProduct = await prisma.product.create({
       data: request.body,

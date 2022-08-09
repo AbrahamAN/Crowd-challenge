@@ -6,7 +6,7 @@ type Product = {
   name: string;
   image_url: string;
   price: number;
-  description?: string;
+  description?: string | null;
 };
 
 type ResponseError = {
@@ -17,9 +17,6 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse<Product | ResponseError>
 ) {
-  // POST, DELETE, PATCH, PUT, GET
-
-  // DELETE PRODUCTS
   if (request.method === "DELETE") {
     const deletedProduct = await prisma.product.delete({
       where: {
@@ -29,15 +26,14 @@ export default async function handler(
     return response.status(200).json(deletedProduct);
   }
 
-  // HACER LOS OTROS
-
   if (request.method === "GET") {
     const product = await prisma.product.findUnique({
       where: {
         id: Number(request.query.id),
       },
     });
-    return response.status(200).json(product);
+
+    return response.status(200).json(product as Product);
   }
 
   if (request.method === "PUT") {

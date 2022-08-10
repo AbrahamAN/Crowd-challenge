@@ -15,7 +15,9 @@ const Products = () => {
 
   const fetchProducts = useCallback(async () => {
     try {
-      const response = await fetch(`${process.env.VERCEL_URL}/products`);
+      const response = await fetch(
+        `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/products`
+      );
       const data = await response.json();
       setItems(data);
     } catch (error) {
@@ -30,7 +32,7 @@ const Products = () => {
       if (productToEdit) {
         // Le decimos al backend con un PUT que edite el producto
         promise = await fetch(
-          `${process.env.VERCEL_URL}/products/${productToEdit.id}`,
+          `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/products/${productToEdit.id}`,
           {
             method: "PUT",
             body: JSON.stringify({
@@ -44,16 +46,19 @@ const Products = () => {
         );
       } else {
         // Le decimos al backend con un POST que cree el producto
-        promise = await fetch(`${process.env.VERCEL_URL}/products`, {
-          method: "POST",
-          body: JSON.stringify({
-            ...product,
-            price: Number(product.price),
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        promise = await fetch(
+          `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/products`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              ...product,
+              price: Number(product.price),
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       }
 
       const data = await promise.json();
@@ -77,9 +82,12 @@ const Products = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`${process.env.VERCEL_URL}/products/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/products/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       const deletedProduct = await response.json();
 

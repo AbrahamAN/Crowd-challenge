@@ -10,7 +10,7 @@ const ProductId = () => {
   const fetchUniqueProduct = useCallback(async () => {
     try {
       const response = await fetch(
-        `${process.env.VERCEL_URL}/products/${router.query.id}`
+        `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/products/${router.query.id}`
       );
       const data = await response.json();
 
